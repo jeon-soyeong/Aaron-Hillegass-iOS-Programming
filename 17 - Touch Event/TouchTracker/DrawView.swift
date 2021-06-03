@@ -12,6 +12,10 @@ class DrawView: UIView {
     var currentLines = [NSValue:Line]()
     var finishedLines = [Line]()
     var angles = [CGFloat]()
+    var touchCount = 1
+    var centerPoint = CGPoint()
+    var startPoint = CGPoint()
+    var endPoint = CGPoint()
     
     @IBInspectable var finishedLineColor: UIColor = UIColor.black {
         didSet {
@@ -31,7 +35,7 @@ class DrawView: UIView {
         }
     }
     
-    func strokeLine(line: Line) {
+    func strokeLine(centerPoint: CGPoint, startPoint: CGPoint, endPoint: CGPoint) {
 //        let path = UIBezierPath()
 ////        path.lineWidth = 10
 //        path.lineWidth = lineThickness
@@ -41,12 +45,8 @@ class DrawView: UIView {
 //        path.addLine(to: line.end)
 //        path.stroke()
         
-        drawArc(centerPoint: CGPoint(x: min(line.begin.x, line.end.x) + abs((line.end.x - line.begin.x) / 2), y: min(line.begin.y, line.end.y) + abs((line.end.y - line.begin.y) / 2)), startPoint: line.begin, endPoint: line.end, clockwise: true)
-        drawArc(centerPoint: CGPoint(x: min(line.begin.x, line.end.x) + abs((line.end.x - line.begin.x) / 2), y: min(line.begin.y, line.end.y) + abs((line.end.y - line.begin.y) / 2)), startPoint: line.begin, endPoint: line.end, clockwise: false)
-        print("centerPoint: \(CGPoint(x: min(line.begin.x, line.end.x) + abs((line.end.x - line.begin.x) / 2), y: min(line.begin.y, line.end.y) + abs((line.end.y - line.begin.y) / 2)))")
-        
-//        drawArc(centerPoint: CGPoint(x: 100, y: 100), startPoint: CGPoint(x: 50, y: 50), endPoint: CGPoint(x: 250, y: 250), clockwise: true)
-//        drawArc(centerPoint: CGPoint(x: 150, y: 150), startPoint: CGPoint(x: 50, y: 50), endPoint: CGPoint(x: 150, y: 150), clockwise: false)
+        drawArc(centerPoint: centerPoint, startPoint: startPoint, endPoint: endPoint, clockwise: true)
+        drawArc(centerPoint: centerPoint, startPoint: startPoint, endPoint: endPoint, clockwise: false)
     }
     
     func drawArc(centerPoint: CGPoint, startPoint: CGPoint, endPoint: CGPoint, clockwise: Bool) {
@@ -72,14 +72,35 @@ class DrawView: UIView {
     override func draw(_ rect: CGRect) {
 //        UIColor.black.setStroke()
         
-        for line in finishedLines {
-            var angle = line.begin.angle(to: line.end)
+        for (index, line) in finishedLines.enumerated() {
+            let angle = line.begin.angle(to: line.end)
             if angle >= 0 && angle <= 90 {
                 finishedLineColor.setStroke()
             } else {
                 currentLineColor.setStroke()
             }
-            strokeLine(line: line)
+            if touchCount == 2 {
+                let endIndex = finishedLines.endIndex - 1
+                let preEndIndex = finishedLines.endIndex - 2
+                
+                let centerX = min(finishedLines[preEndIndex].begin.x, finishedLines[endIndex].begin.x) + abs(finishedLines[preEndIndex].begin.x - finishedLines[endIndex].begin.x) / 2
+                let centerY = min(finishedLines[preEndIndex].begin.y, finishedLines[endIndex].begin.y) + abs(finishedLines[preEndIndex].begin.y - finishedLines[endIndex].begin.y) / 2
+                
+                let startX = min(finishedLines[preEndIndex].begin.x, finishedLines[endIndex].begin.x)
+                let startY = min(finishedLines[preEndIndex].begin.y, finishedLines[endIndex].begin.y)
+                
+                let endX = max(finishedLines[preEndIndex].begin.x, finishedLines[endIndex].begin.x)
+                let endY = max(finishedLines[preEndIndex].begin.y, finishedLines[endIndex].begin.y)
+                
+                centerPoint = CGPoint(x: centerX, y: centerY)
+                startPoint = CGPoint(x: startX, y: startY)
+                endPoint = CGPoint(x: endX, y: endY)
+            } else {
+                centerPoint = CGPoint(x: min(line.begin.x, line.end.x) + abs((line.end.x - line.begin.x) / 2), y: min(line.begin.y, line.end.y) + abs((line.end.y - line.begin.y) / 2))
+                startPoint = line.begin
+                endPoint = line.end
+            }
+            strokeLine(centerPoint: centerPoint, startPoint: startPoint, endPoint: endPoint)
         }
         
 //        UIColor.red.setStroke()
@@ -128,6 +149,15 @@ class DrawView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.count == 2 {
+            touchCount = 2
+        } else {
+            touchCount = 1
+        }
+        
+        let touch = touches.first!
+        let location = touch.location(in: self)
+        
 //        if var line = currentLine {
 //            let touch = touches.first!
 //            let location = touch.location(in: self)
