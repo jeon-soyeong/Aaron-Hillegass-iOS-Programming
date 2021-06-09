@@ -22,6 +22,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
     }
     var moveRecognizer: UIPanGestureRecognizer!
     var flag = " "
+    var pathWidth = 10
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,12 +46,27 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
         moveRecognizer.delegate = self
         moveRecognizer.cancelsTouchesInView = false
         addGestureRecognizer(moveRecognizer)
+        
+        let velocityRecognizer = UIPanGestureRecognizer(target: self, action: #selector(getVelocity(gestureRecognizer:)))
+        velocityRecognizer.delegate = self
+        velocityRecognizer.cancelsTouchesInView = false
+        addGestureRecognizer(velocityRecognizer)
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWithGestureRecognizer
         otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return true
+    }
+    
+    @objc func getVelocity(gestureRecognizer: UIPanGestureRecognizer) {
+        let velocity = gestureRecognizer.velocity(in: self)
+        print("velocity: \(velocity)")
+        if velocity.x.magnitude > 300 || velocity.y.magnitude > 300 {
+            pathWidth = 40
+        } else {
+            pathWidth = 20
+        }
     }
     
     @objc func moveLine(gestureRecognizer: UIPanGestureRecognizer) {
@@ -160,7 +176,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
     
     func strokeLine(line: Line) {
         let path = UIBezierPath()
-        path.lineWidth = 10
+        path.lineWidth = CGFloat(pathWidth)
         path.lineCapStyle = CGLineCap.round
         
         path.move(to: line.begin)
