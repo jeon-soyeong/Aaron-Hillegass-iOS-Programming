@@ -8,7 +8,7 @@
 import UIKit
 import Swift
 
-class DrawView: UIView, UIGestureRecognizerDelegate {
+class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewControllerDelegate {
     
     var currentLines = [NSValue:Line]()
     var finishedLines = [Line]()
@@ -23,6 +23,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
     var moveRecognizer: UIPanGestureRecognizer!
     var flag = " "
     var pathWidth = 10
+    var selectedColor = UIColor.clear
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -71,8 +72,13 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
             print("handleThreeFingerSwipe")
             let rootController = UIApplication.shared.keyWindow?.rootViewController
             let picker = UIColorPickerViewController()
+            picker.delegate = self
             rootController?.present(picker, animated: true, completion: nil)
         }
+    }
+
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        selectedColor = viewController.selectedColor
     }
     
     @objc func getVelocity(gestureRecognizer: UIPanGestureRecognizer) {
@@ -226,7 +232,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
     
     override func draw(_ rect: CGRect) {
         // Draw finished lines in black
-        UIColor.black.setStroke()
+        selectedColor.setStroke()
         for line in finishedLines {
             strokeLine(line: line)
         }
