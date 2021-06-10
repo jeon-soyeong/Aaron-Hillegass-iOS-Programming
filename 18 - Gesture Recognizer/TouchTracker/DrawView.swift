@@ -23,7 +23,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
     var moveRecognizer: UIPanGestureRecognizer!
     var flag = " "
     var pathWidth = 10
-    var selectedColor = UIColor.clear
+    var selectedColor = UIColor.black
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
