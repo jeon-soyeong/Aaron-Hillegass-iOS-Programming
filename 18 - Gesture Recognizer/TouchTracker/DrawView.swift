@@ -69,6 +69,9 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
     @objc func handleThreeFingerSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
         if gestureRecognizer.direction == .left {
             print("handleThreeFingerSwipe")
+            let rootController = UIApplication.shared.keyWindow?.rootViewController
+            let picker = UIColorPickerViewController()
+            rootController?.present(picker, animated: true, completion: nil)
         }
     }
     
