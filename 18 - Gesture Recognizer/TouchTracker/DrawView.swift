@@ -42,14 +42,21 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
                                                                action: #selector(longPress(gestureRecognizer:)))
         addGestureRecognizer(longPressRecognizer)
         
+        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleThreeFingerSwipe(gestureRecognizer:)))
+        swipeRecognizer.direction = .left
+        swipeRecognizer.numberOfTouchesRequired = 3 // 3 finger swipe
+        addGestureRecognizer(swipeRecognizer)
+        
         moveRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveLine(gestureRecognizer:)))
         moveRecognizer.delegate = self
         moveRecognizer.cancelsTouchesInView = false
+        moveRecognizer.require(toFail: swipeRecognizer)
         addGestureRecognizer(moveRecognizer)
         
         let velocityRecognizer = UIPanGestureRecognizer(target: self, action: #selector(getVelocity(gestureRecognizer:)))
         velocityRecognizer.delegate = self
         velocityRecognizer.cancelsTouchesInView = false
+        velocityRecognizer.require(toFail: swipeRecognizer)
         addGestureRecognizer(velocityRecognizer)
     }
     
@@ -57,6 +64,12 @@ class DrawView: UIView, UIGestureRecognizerDelegate {
         shouldRecognizeSimultaneouslyWithGestureRecognizer
         otherGestureRecognizer: UIGestureRecognizer) -> Bool {
     return true
+    }
+    
+    @objc func handleThreeFingerSwipe(gestureRecognizer: UISwipeGestureRecognizer) {
+        if gestureRecognizer.direction == .left {
+            print("handleThreeFingerSwipe")
+        }
     }
     
     @objc func getVelocity(gestureRecognizer: UIPanGestureRecognizer) {
