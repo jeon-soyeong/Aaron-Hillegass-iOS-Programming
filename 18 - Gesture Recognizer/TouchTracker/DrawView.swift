@@ -20,7 +20,7 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
             }
         }
     }
-    var moveRecognizer: UIPanGestureRecognizer!
+    var panRecognizer: UIPanGestureRecognizer!
     var flag = " "
     var pathWidth = 10
     var selectedColor = UIColor.black
@@ -48,17 +48,17 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
         swipeRecognizer.numberOfTouchesRequired = 3 // 3 finger swipe
         addGestureRecognizer(swipeRecognizer)
         
-        moveRecognizer = UIPanGestureRecognizer(target: self, action: #selector(moveLine(gestureRecognizer:)))
-        moveRecognizer.delegate = self
-        moveRecognizer.cancelsTouchesInView = false
-        moveRecognizer.require(toFail: swipeRecognizer)
-        addGestureRecognizer(moveRecognizer)
-        
-        let velocityRecognizer = UIPanGestureRecognizer(target: self, action: #selector(getVelocity(gestureRecognizer:)))
-        velocityRecognizer.delegate = self
-        velocityRecognizer.cancelsTouchesInView = false
-        velocityRecognizer.require(toFail: swipeRecognizer)
-        addGestureRecognizer(velocityRecognizer)
+        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(pan(gestureRecognizer:)))
+        panRecognizer.delegate = self
+        panRecognizer.cancelsTouchesInView = false
+        panRecognizer.require(toFail: swipeRecognizer)
+        addGestureRecognizer(panRecognizer)
+       
+//        let velocityRecognizer = UIPanGestureRecognizer(target: self, action: #selector(getVelocity(gestureRecognizer:)))
+//        velocityRecognizer.delegate = self
+//        velocityRecognizer.cancelsTouchesInView = false
+//        velocityRecognizer.require(toFail: moveRecognizer)
+//        addGestureRecognizer(velocityRecognizer)
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer,
@@ -81,7 +81,19 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
         selectedColor = viewController.selectedColor
     }
     
-    @objc func getVelocity(gestureRecognizer: UIPanGestureRecognizer) {
+//    @objc func getVelocity(gestureRecognizer: UIPanGestureRecognizer) {
+//        let velocity = gestureRecognizer.velocity(in: self)
+//        print("velocity: \(velocity)")
+//        if velocity.x.magnitude > 300 || velocity.y.magnitude > 300 {
+//            pathWidth = 40
+//        } else {
+//            pathWidth = 20
+//        }
+//    }
+    
+    @objc func pan(gestureRecognizer: UIPanGestureRecognizer) {
+        print("Recognized a pan")
+        
         let velocity = gestureRecognizer.velocity(in: self)
         print("velocity: \(velocity)")
         if velocity.x.magnitude > 300 || velocity.y.magnitude > 300 {
@@ -89,10 +101,6 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
         } else {
             pathWidth = 20
         }
-    }
-    
-    @objc func moveLine(gestureRecognizer: UIPanGestureRecognizer) {
-        print("Recognized a pan")
         
         // If a line is selected...
         if let index = selectedLineIndex {
