@@ -24,6 +24,8 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
     var flag = " "
     var pathWidth = 10
     var selectedColor = UIColor.black
+    var pathArray = [UIBezierPath]()
+    var count = 0
  
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -205,13 +207,21 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
     }
     
     func strokeLine(line: Line) {
-        let path = UIBezierPath()
-        path.lineWidth = CGFloat(pathWidth)
-        path.lineCapStyle = CGLineCap.round
-        
-        path.move(to: line.begin)
-        path.addLine(to: line.end)
-        path.stroke()
+        if count != 0 {
+            var path = pathArray[count - 1]
+            var fillLayer = CAShapeLayer()
+            fillLayer.path = path.cgPath
+            fillLayer.strokeColor = selectedColor.cgColor
+            fillLayer.lineWidth = CGFloat(pathWidth)
+            fillLayer.lineCap = CAShapeLayerLineCap.round
+            fillLayer.lineJoin = CAShapeLayerLineJoin.round
+            
+            path.move(to: line.begin)
+            path.addLine(to: line.end)
+            path.stroke()
+           
+            self.layer.addSublayer(fillLayer)
+        }
     }
     
     func indexOfLineAtPoint(point: CGPoint) -> Int? {
@@ -240,9 +250,10 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
     
     override func draw(_ rect: CGRect) {
         // Draw finished lines in black
-        selectedColor.setStroke()
         for line in finishedLines {
-            strokeLine(line: line)
+            let path = UIBezierPath()
+            pathArray.append(path)
+            count += 1
         }
         
         // Draw current lines in red
@@ -292,8 +303,8 @@ class DrawView: UIView, UIGestureRecognizerDelegate, UIColorPickerViewController
                 let key = NSValue(nonretainedObject: touch)
                 if var line = currentLines[key] {
                     line.end = touch.location(in: self)
-                    
                     finishedLines.append(line)
+                    strokeLine(line: line)
                     currentLines.removeValue(forKey: key)
                 }
             }
