@@ -16,6 +16,8 @@
 		9B3280E3265F7A5700946C83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B3280E1265F7A5700946C83 /* Main.storyboard */; };
 		9B3280E5265F7A5B00946C83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B3280E4265F7A5B00946C83 /* Assets.xcassets */; };
 		9B3280E8265F7A5B00946C83 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B3280E6265F7A5B00946C83 /* LaunchScreen.storyboard */; };
+		9B3379D7268456FB0044D258 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3379D6268456FB0044D258 /* WKWebViewController.swift */; };
+		9B3379DA26845CF20044D258 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3379D926845CF20044D258 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		9B3280E4265F7A5B00946C83 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9B3280E7265F7A5B00946C83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B3280E9265F7A5B00946C83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B3379D6268456FB0044D258 /* WKWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebViewController.swift; sourceTree = "<group>"; };
+		9B3379D926845CF20044D258 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3379DA26845CF20044D258 /* WebKit.framework in Frameworks */,
 				9B2A20DF2679E05900DBD908 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +52,7 @@
 		9B2A20DD2679E05900DBD908 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B3379D926845CF20044D258 /* WebKit.framework */,
 				9B2A20DE2679E05900DBD908 /* MapKit.framework */,
 			);
 			name = Frameworks;
@@ -76,6 +82,7 @@
 				9B3280DD265F7A5700946C83 /* SceneDelegate.swift */,
 				9B3280DF265F7A5700946C83 /* ViewController.swift */,
 				9B3280E1265F7A5700946C83 /* Main.storyboard */,
+				9B3379D6268456FB0044D258 /* WKWebViewController.swift */,
 				9B2A20E12679F60B00DBD908 /* MapViewController.swift */,
 				9B32616A2678F1450036DBE9 /* ConversionViewController.swift */,
 				9B3280E4265F7A5B00946C83 /* Assets.xcassets */,
@@ -158,6 +165,7 @@
 				9B3280E0265F7A5700946C83 /* ViewController.swift in Sources */,
 				9B3280DC265F7A5700946C83 /* AppDelegate.swift in Sources */,
 				9B32616B2678F1450036DBE9 /* ConversionViewController.swift in Sources */,
+				9B3379D7268456FB0044D258 /* WKWebViewController.swift in Sources */,
 				9B2A20E22679F60B00DBD908 /* MapViewController.swift in Sources */,
 				9B3280DE265F7A5700946C83 /* SceneDelegate.swift in Sources */,
 			);

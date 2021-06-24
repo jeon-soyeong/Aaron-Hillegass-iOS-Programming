@@ -100,6 +100,22 @@
             </objects>
             <point key="canvasLocation" x="1860" y="71.800947867298575"/>
         </scene>
+        <!--Web-->
+        <scene sceneID="XlW-bi-1Wr">
+            <objects>
+                <viewController id="ulS-Kc-daU" customClass="WKWebViewController" customModule="WorldTrotter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fdh-xw-SOD">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ODU-OX-rzO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Web" image="square.and.arrow.up.on.square" catalog="system" id="J4f-UE-vBY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="23m-WI-lro" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1854" y="774"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="dkE-2r-APr">
             <objects>
@@ -113,16 +129,21 @@
                     <connections>
                         <segue destination="pOp-JK-N8b" kind="relationship" relationship="viewControllers" id="9he-LW-AP5"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="7Cy-ta-9qm"/>
+                        <segue destination="ulS-Kc-daU" kind="relationship" relationship="viewControllers" id="jNK-3J-N0V"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbi-RN-z0g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="962" y="75"/>
+            <point key="canvasLocation" x="1009" y="72"/>
         </scene>
     </scenes>
     <resources>
         <image name="ConvertIcon" width="48.333332061767578" height="32.333332061767578"/>
         <image name="MapIcon" width="48.333332061767578" height="32.333332061767578"/>
+        <image name="square.and.arrow.up.on.square" catalog="system" width="117" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
