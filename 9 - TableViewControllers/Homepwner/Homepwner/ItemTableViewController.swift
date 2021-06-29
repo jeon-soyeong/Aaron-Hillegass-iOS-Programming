@@ -10,11 +10,15 @@ import UIKit
 class ItemTableViewController: UITableViewController {
 
     var itemStore: ItemStore!
-    let list = ["50 이상","50 이하"]
+    let list = ["50 이상", "50 이하", nil]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        var items = [Item]()
+        let item = Item(name: "no more items", valueInDollars: 0, serialNumber: nil, overFlag: false)
+        items.append(item)
+        itemStore.allItems.append(items)
+        
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
@@ -42,7 +46,12 @@ class ItemTableViewController: UITableViewController {
         let item = itemStore.allItems[indexPath.section][indexPath.row]
         
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        
+        if item.valueInDollars != 0 {
+            cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+        } else {
+            cell.detailTextLabel?.text = nil
+        }
 
         return cell
     }
