@@ -24,6 +24,8 @@ class ItemTableViewController: UITableViewController {
         let insets = UIEdgeInsets(top: statusBarHeight, left: 0, bottom: 0, right: 0)
         tableView.contentInset = insets
         tableView.scrollIndicatorInsets = insets
+        
+        tableView.backgroundView = UIImageView(image: UIImage(named: ""))
     }
 
     // MARK: - Table view data source
@@ -47,8 +49,10 @@ class ItemTableViewController: UITableViewController {
         
         cell.textLabel?.text = item.name
         
-        if item.valueInDollars != 0 {
+        if indexPath.section != itemStore.allItems.count - 1 {
             cell.detailTextLabel?.text = "$\(item.valueInDollars)"
+            cell.textLabel?.font = cell.textLabel?.font.withSize(20)
+            cell.detailTextLabel?.font = cell.detailTextLabel?.font.withSize(20)
         } else {
             cell.detailTextLabel?.text = nil
         }
@@ -60,6 +64,14 @@ class ItemTableViewController: UITableViewController {
         return list[section]
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if indexPath.section == itemStore.allItems.count - 1, indexPath.row == itemStore.allItems[indexPath.section].count - 1 {
+            return 44
+        } else {
+            return 60
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
