@@ -52,4 +52,10 @@ class ItemStore {
         print("allItems: \(allItems)")
         return [newItem:index]
     }
+    
+    func removeItem(item: Item, section: Int) {
+        if let index = allItems[section].firstIndex(of: item) {
+            allItems[section].remove(at: index)
+        }
+    }
 }
