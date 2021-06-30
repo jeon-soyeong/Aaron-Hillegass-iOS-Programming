@@ -149,11 +149,25 @@ class ItemTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "remove"
     }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 2 {
+            return false
+        }
+        return true
+    }
 
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         itemStore.moveItemAtIndex(fromIndex: fromIndexPath.row, toIndex: to.row, fromSection: fromIndexPath.section, toSection: to.section)
+    }
+    
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if (proposedDestinationIndexPath.section == 2) {
+                return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
     }
     
     // Override to support conditional rearranging of the table view.
