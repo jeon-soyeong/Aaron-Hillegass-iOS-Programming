@@ -153,17 +153,17 @@ class ItemTableViewController: UITableViewController {
     
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        itemStore.moveItemAtIndex(fromIndex: fromIndexPath.row, toIndex: to.row, section: 0)
+        itemStore.moveItemAtIndex(fromIndex: fromIndexPath.row, toIndex: to.row, fromSection: fromIndexPath.section, toSection: to.section)
     }
     
-
-    /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
+        if indexPath.section == 2 {
+            return false
+        }
         return true
     }
-    */
 
     /*
     // MARK: - Navigation

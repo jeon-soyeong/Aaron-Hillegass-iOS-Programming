@@ -59,13 +59,13 @@ class ItemStore {
         }
     }
     
-    func moveItemAtIndex(fromIndex: Int, toIndex: Int, section: Int) {
-        if fromIndex == toIndex {
-            return
+    func moveItemAtIndex(fromIndex: Int, toIndex: Int, fromSection: Int, toSection: Int) {
+        print("fromSection: \(fromSection)")
+        print("toSection: \(toSection)")
+        if fromIndex != toIndex, fromSection != toSection {
+            let moveItem = allItems[fromSection][fromIndex]
+            allItems[fromSection].remove(at: fromIndex)
+            allItems[toSection].insert(moveItem, at: toIndex)
         }
-        
-        let moveItem = allItems[section][fromIndex]
-        allItems[section].remove(at: fromIndex)
-        allItems[section].insert(moveItem, at: toIndex)
     }
 }
