@@ -126,21 +126,33 @@ class ItemTableViewController: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             let item = itemStore.allItems[indexPath.section]
-            itemStore.removeItem(item: item[indexPath.row], section: indexPath.section)
             
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let title = "Delete \(item[indexPath.row].name)?"
+            let message = "Are you sure you want to delete this item?"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            ac.addAction(cancelAction)
+            
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: {
+                (action) -> Void in
+                self.itemStore.removeItem(item: item[indexPath.row], section: indexPath.section)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            })
+            ac.addAction(deleteAction)
+            present(ac, animated: true, completion: nil)
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
     
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        itemStore.moveItemAtIndex(fromIndex: fromIndexPath.row, toIndex: to.row, section: 0)
     }
-    */
+    
 
     /*
     // Override to support conditional rearranging of the table view.
