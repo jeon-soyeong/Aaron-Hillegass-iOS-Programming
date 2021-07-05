@@ -65,13 +65,18 @@ class DetailViewController: UIViewController {
             }
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        nameField.delegate = self
+        valueField.delegate = self
+        serialNumberField.delegate = self
+    }
+    
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
 }
 
 extension DetailViewController: UITextFieldDelegate {
@@ -79,6 +84,34 @@ extension DetailViewController: UITextFieldDelegate {
     //return키 누르면 키보드 사라지기
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
+    }
+}
+
+
+@IBDesignable
+class CustomtextField: UITextField {
+    let border = CALayer()
+    let width = CGFloat(2.0)
+    
+    override func becomeFirstResponder() -> Bool {
+        super.becomeFirstResponder()
+        border.borderColor = UIColor.red.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height:self.frame.size.height)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+        
+        return true
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        super.resignFirstResponder()
+        border.borderColor = UIColor.clear.cgColor
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+
         return true
     }
 }
