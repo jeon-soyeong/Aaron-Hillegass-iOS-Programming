@@ -12,12 +12,23 @@ class DetailViewController: UIViewController {
     @IBOutlet var serialNumberField: UITextField!
     @IBOutlet var valueField: UITextField!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var stackView: UIStackView!
+    @IBOutlet var changeDateButton: UIButton!
     
     var item: Item? {
         didSet {
             navigationItem.title = item?.name
         }
     }
+    
+    lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker(frame: CGRect(x: 50, y: 200, width: self.view.frame.width, height: 200))
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.preferredDatePickerStyle = .inline
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        
+        return datePicker
+    }()
     
     let numberFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -68,15 +79,21 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        nameField.delegate = self
-        valueField.delegate = self
-        serialNumberField.delegate = self
     }
     
     @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
+    @IBAction func changeDate(_ sender: Any) {
+        stackView.addSubview(datePicker)
+    }
+    
+    @objc func datePickerValueChanged(sender: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        dateLabel.text = dateFormatter.string(from: sender.date)
+    }
 }
 
 extension DetailViewController: UITextFieldDelegate {

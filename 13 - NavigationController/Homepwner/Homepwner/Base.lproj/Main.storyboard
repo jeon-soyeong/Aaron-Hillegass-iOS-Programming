@@ -147,11 +147,18 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Created" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rxO-1Z-dnU">
-                                        <rect key="frame" x="20" y="134" width="374" height="616"/>
+                                        <rect key="frame" x="20" y="134" width="374" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRx-cm-EFM">
+                                        <rect key="frame" x="20" y="162.5" width="374" height="587.5"/>
+                                        <state key="normal" title="change Date"/>
+                                        <connections>
+                                            <action selector="changeDate:" destination="j0x-vS-3dS" eventType="touchUpInside" id="34F-9X-BYN"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="cg7-8h-A57" firstAttribute="leading" secondItem="WJa-0H-IYi" secondAttribute="leading" id="ANY-bM-4ZD"/>
@@ -175,9 +182,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="uvX-JN-EM8"/>
                     <connections>
+                        <outlet property="changeDateButton" destination="CRx-cm-EFM" id="FNQ-0w-WZn"/>
                         <outlet property="dateLabel" destination="rxO-1Z-dnU" id="uo2-40-zRe"/>
                         <outlet property="nameField" destination="cg7-8h-A57" id="VDq-aI-BnK"/>
                         <outlet property="serialNumberField" destination="WJa-0H-IYi" id="wpB-Vi-kk0"/>
+                        <outlet property="stackView" destination="CRI-Ct-Nlc" id="MFs-fG-rTf"/>
                         <outlet property="valueField" destination="5aS-Md-ilu" id="7Pb-4Q-DG1"/>
                     </connections>
                 </viewController>
